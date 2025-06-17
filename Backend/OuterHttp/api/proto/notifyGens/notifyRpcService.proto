@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package notifyGens;
+
+option go_package = "github.com/Ethic1903/OuterHttp;gRPCProtos";
+
+service Notification {
+  rpc SendEmail(SendEmailRequest) returns (SendEmailResponse);
+}
+
+message SendEmailRequest {
+  string receiver = 1;
+  string subject = 2;
+  string body = 3;
+  repeated string attachments = 4;
+}
+
+message SendEmailResponse {
+  string message = 1;
+}
