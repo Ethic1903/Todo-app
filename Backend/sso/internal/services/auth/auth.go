@@ -115,6 +115,7 @@ func (a *Auth) RegisterNewUser(
 		if errors.Is(err, storage.ErrUserAlrExists) {
 			log.Warn("user already exists")
 		}
+		log.Error("unexpected error", err)
 		return 0, fmt.Errorf("%s: %w", op, ErrUserNotExists)
 	}
 	log.Info("User have been registered")

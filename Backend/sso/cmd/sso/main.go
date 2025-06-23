@@ -38,7 +38,7 @@ func main() {
 	log.Info("signal received", slog.String("signal", sign.String()))
 	application.GRPCSrv.Stop()
 	log.Info("application stopped")
-	//TODO запустить gRPC-сервер приложения
+
 }
 
 func setupLogger(env string) *slog.Logger {
