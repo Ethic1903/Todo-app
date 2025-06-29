@@ -5,11 +5,14 @@ import (
 	"AuthService/internal/lib/jwt"
 	"AuthService/internal/storage"
 	"context"
+	_ "database/sql"
 	"errors"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"log/slog"
 	"time"
+
+	_ "github.com/lib/pq"
 )
 
 type Auth struct {
@@ -40,6 +43,7 @@ var (
 	ErrInvalidCredentials = errors.New("invalid credentials")
 	ErrInvalidAppId       = errors.New("invalid app id")
 	ErrUserNotExists      = errors.New("user does not exist")
+	ErrUserAlrExists      = errors.New("user not found")
 )
 
 // New returns a new instance of the Auth service
@@ -68,6 +72,7 @@ func (a *Auth) Login(
 
 	user, err := a.userProvider.User(ctx, email)
 	if err != nil {
+		fmt.Println(err)
 		if errors.Is(err, storage.ErrUserNotFound) {
 			a.log.Warn("user not found")
 			return "", fmt.Errorf("%s: %w", op, ErrInvalidCredentials)

@@ -1,5 +1,5 @@
 env: "local"
-storage_path: "postgres://postgres:8246@localhost:5432/sso_db?sslmode=disable"
+storage_path: "postgres://admin:8246@localhost:5432/sso_db?sslmode=disable"
 token_ttl: 1h
 grpc:
   port: 44044

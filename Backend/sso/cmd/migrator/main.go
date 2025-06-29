@@ -1,5 +1,7 @@
 package main
 
+// Команда для запуска: go run .\cmd\migrator --storage-path="postgres://admin:8246@localhost:5432/sso_db?sslmode=disable" --migrations-path=./migrations
+
 import (
 	"errors"
 	"flag"
