@@ -1,0 +1,7 @@
+env: "local"
+storage_path: "postgres://admin:8246@localhost:5433/shortener_db?sslmode=disable"
+migrations_path: "./migrations"
+http_server:
+  address: "localhost:7071"
+  timeout: 4s
+  idle_timeout: 60s
