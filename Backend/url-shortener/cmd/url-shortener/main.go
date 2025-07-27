@@ -6,8 +6,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"log/slog"
+	"net/http"
 	"os"
 	"url-shortener/internal/config"
+	"url-shortener/internal/http-server/handlers/url/save"
+	mwLogger "url-shortener/internal/http-server/middleware/logger"
 	"url-shortener/internal/lib/logger/sl"
 	"url-shortener/internal/storage/postgres"
 )
@@ -23,6 +26,7 @@ func main() {
 	fmt.Println(cfg)
 	log := setupLogger(cfg.Env)
 	log.Debug("starting url-shortener service...")
+	ctx := context.Background()
 
 	storage, err := postgres.New(cfg.StoragePath)
 	if err != nil {
@@ -35,8 +39,27 @@ func main() {
 	// middleware
 	router.Use(middleware.RequestID)
 	router.Use(middleware.Logger)
+	router.Use(mwLogger.New(log))
+	router.Use(middleware.Recoverer)
+	router.Use(middleware.URLFormat)
 
-	ctx := context.Background()
+	router.Post("/url", save.New(ctx, log, storage))
+	router.Get("/{alias}", redirect.New(ctx, log, storage))
+
+	log.Info("starting url-shortener server", slog.String("address", cfg.Address))
+	srv := &http.Server{
+		Addr:         cfg.Address,
+		Handler:      router,
+		ReadTimeout:  cfg.HTTPServer.Timeout,
+		WriteTimeout: cfg.HTTPServer.Timeout,
+		IdleTimeout:  cfg.HTTPServer.IdleTimeout,
+	}
+
+	if err := srv.ListenAndServe(); err != nil {
+		log.Error("failed to start server")
+	}
+	log.Error("server stopped")
+
 	id, err := storage.SaveURL(ctx, "https://yandex.ru", "ya")
 	if err != nil {
 		log.Error("failed to save url", sl.Err(err))
@@ -51,10 +74,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = storage.DeleteURL(ctx, "google")
-	if err != nil {
-		log.
-	}
+	//err = storage.DeleteURL(ctx, "google")
+	//if err != nil {
+	//	log.
+	//}
 }
 
 func setupLogger(env string) *slog.Logger {

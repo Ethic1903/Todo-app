@@ -47,7 +47,7 @@ func (s *Storage) SaveURL(ctx context.Context, url string, alias string) (int64,
 	return id, nil
 }
 
-func (s *Storage) URL(ctx context.Context, alias string) (string, error) {
+func (s *Storage) GetURL(ctx context.Context, alias string) (string, error) {
 	const op = "storage.postgres.URL"
 
 	stmt, err := s.db.Prepare(`select url from url where alias=$1`)
