@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"net/http"
 	resp "url-shortener/internal/lib/api/response"
+	"url-shortener/internal/lib/logger/sl"
 	"url-shortener/internal/storage"
 )
 
@@ -38,5 +39,12 @@ func New(log *slog.Logger, urlGetter URLGetter) http.HandlerFunc {
 			render.JSON(w, r, resp.Error("not found"))
 			return
 		}
+		if err != nil {
+			log.Error("failed to find url", sl.Err(err))
+			render.JSON(w, r, resp.Error("failed to find url"))
+			return
+		}
+
+		log.Info("url extracted", slog.String("url", resURL))
 	}
 }
