@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	ssogrpc "url-shortener/internal/clients/sso/grpc"
 	"url-shortener/internal/config"
 	"url-shortener/internal/http-server/handlers/redirect"
 	"url-shortener/internal/http-server/handlers/url/save"
@@ -28,6 +29,16 @@ func main() {
 	log := setupLogger(cfg.Env)
 	log.Debug("starting url-shortener service...")
 	ctx := context.Background()
+
+	ssoClient, err := ssogrpc.New(ctx,
+		cfg.Clients.SSO.Address,
+		cfg.Clients.SSO.Timeout,
+		cfg.Clients.SSO.RetriesCounter,
+	)
+	if err != nil {
+		log.Error("failed to init sso client", sl.Err(err))
+		os.Exit(1)
+	}
 
 	storage, err := postgres.New(cfg.StoragePath)
 	if err != nil {
