@@ -4,6 +4,8 @@ github.com/BurntSushi/toml v1.2.1 h1:9F2/+DoOYIOksmaJFPw1tGFy1eDnIJXg+UHjuD8lTak
 github.com/BurntSushi/toml v1.2.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/Ethic1903/todo-protos v0.0.0-20250525093608-c10414d6c1fa h1:76mmtnzJOn/WH7boyg7VAB/cH6oToTngHoAnmaKuWNo=
 github.com/Ethic1903/todo-protos v0.0.0-20250525093608-c10414d6c1fa/go.mod h1:/P9SBJTXvtmci/tvw04rNSKGolwjo16aClbEwUNZrzU=
+github.com/Ethic1903/todo-protos v0.0.0-20250731154445-9209acc46b5f h1:VZ5/hrigOrObV+PNsNQBL067CdtBYC9emrfDhLF4En8=
+github.com/Ethic1903/todo-protos v0.0.0-20250731154445-9209acc46b5f/go.mod h1:/P9SBJTXvtmci/tvw04rNSKGolwjo16aClbEwUNZrzU=
 github.com/Microsoft/go-winio v0.6.2 h1:F2VQgta7ecxGYO8k3ZZz3RS8fVIXVxONVUPlNERoyfY=
 github.com/Microsoft/go-winio v0.6.2/go.mod h1:yd8OoFMLzJbo9gZq8j5qaps8bJ9aShtEA8Ipt1oGCvU=
 github.com/brianvoe/gofakeit/v6 v6.28.0 h1:Xib46XXuQfmlLS2EXRuJpqcw8St6qSZz75OUo0tgAW4=

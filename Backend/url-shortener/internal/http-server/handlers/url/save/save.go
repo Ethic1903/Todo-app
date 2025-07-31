@@ -35,9 +35,17 @@ func New(ctx context.Context, log *slog.Logger, urlSaver URLSaver) http.HandlerF
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "handlers.url.save.New"
 
+		userID, ok := r.Context().Value("userID").(int64)
+		if !ok {
+			log.Error("user ID not found in context")
+			render.JSON(w, r, resp.Error("authentication required"))
+			return
+		}
+
 		log = log.With(
 			slog.String("op", op),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
+			slog.Int64("user_id", userID),
 		)
 
 		var req Request

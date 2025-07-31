@@ -3,7 +3,7 @@ module AuthService
 go 1.24.0
 
 require (
-	github.com/Ethic1903/todo-protos v0.0.0-20250525093608-c10414d6c1fa
+	github.com/Ethic1903/todo-protos v0.0.0-20250731154445-9209acc46b5f
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/golang-migrate/migrate/v4 v4.18.3

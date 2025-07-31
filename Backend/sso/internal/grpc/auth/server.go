@@ -90,6 +90,23 @@ func (s *serverAPI) IsAdmin(
 	return &ssov1.IsAdminResponse{IsAdmin: isAdmin}, nil
 }
 
+//func (s *serverAPI) ValidateToken(ctx context.Context, req *ssov1.ValidateTokenRequest) (*ssov1.ValidateTokenResponse, error){
+//	if req.GetToken() == "" {
+//		return nil, status.Error(codes.InvalidArgument, "token is required")
+//	}
+//
+//	token, err := jwt.Parse(req.GetToken(), func(token *jwt.Token) (interface{}, error) {
+//		claims := token.Claims.(jwt.MapClaims)
+//		appID := int(claims["app_id"].(float64))
+//
+//		app, err := s.auth.App(ctx, appID)
+//		if err != nil {
+//			return nil, err
+//		}
+//		return []byte(app.Secret), nil
+//	})
+//}
+
 func validateLogin(req *ssov1.LoginRequest) error {
 	if req.GetEmail() == "" {
 		return status.Errorf(codes.InvalidArgument, "email is required")

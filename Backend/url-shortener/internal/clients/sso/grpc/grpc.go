@@ -42,15 +42,15 @@ func New(ctx context.Context,
 	}, nil
 }
 
-func (c *Client) ValidateToken(ctx context.Context, token string) (int64, error) {
-	const op = "sso.grpc.ValidateToken"
-
-	resp, err := c.api.ValidateToken(ctx, &ssov1.ValidateTokenRequest{Token: token})
-	if err != nil {
-		return 0, fmt.Errorf("%s: %w", op, err)
-	}
-	return resp.GetUserId(), nil
-}
+//func (c *Client) ValidateToken(ctx context.Context, token string) (int64, error) {
+//	const op = "sso.grpc.ValidateToken"
+//
+//	resp, err := c.api.ValidateToken(ctx, &ssov1.ValidateTokenRequest{Token: token})
+//	if err != nil {
+//		return 0, fmt.Errorf("%s: %w", op, err)
+//	}
+//	return resp.GetUserId(), nil
+//}
 
 func (c *Client) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 	const op = "sso.grpc.IsAdmin"

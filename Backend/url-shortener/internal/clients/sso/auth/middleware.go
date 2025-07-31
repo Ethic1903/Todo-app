@@ -48,7 +48,7 @@ func (a *MiddlewareAuth) extractToken(r *http.Request) string {
 }
 
 func (a *MiddlewareAuth) validateToken(token string) (int64, error) {
-	checkToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
+	checkToken, err := jwt.Parse(token, func(checkToken *jwt.Token) (interface{}, error) {
 		return []byte(a.jwtSecret), nil
 	})
 	if err != nil || !checkToken.Valid {
