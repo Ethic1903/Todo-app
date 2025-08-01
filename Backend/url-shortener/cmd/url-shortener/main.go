@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"log/slog"
 	"net/http"
 	"os"
@@ -16,6 +14,9 @@ import (
 	mwLogger "url-shortener/internal/http-server/middleware/logger"
 	"url-shortener/internal/lib/logger/sl"
 	"url-shortener/internal/storage/postgres"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 const (
@@ -61,8 +62,8 @@ func main() {
 
 	router.Route("/url", func(r chi.Router) {
 		r.Use(authMw.Auth)
-		r.Post("/", save.New(ctx, log, storage))
-		//TODO add delete method /url/{id}
+		r.Post("/", save.New(ctx, log, storage, cfg.AliasLength))
+		// TODO: add delete method /url/{id}
 	})
 
 	router.Get("/{alias}", redirect.New(log, storage))
@@ -94,11 +95,6 @@ func main() {
 		log.Error("failed to save url", sl.Err(err))
 		os.Exit(1)
 	}
-
-	//err = storage.DeleteURL(ctx, "google")
-	//if err != nil {
-	//	log.
-	//}
 }
 
 func setupLogger(env string) *slog.Logger {

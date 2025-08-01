@@ -1,11 +1,10 @@
 package main
 
-// Команда для запуска: go run .\cmd\migrator --storage-path="postgres://admin:8246@localhost:5432/sso_db?sslmode=disable" --migrations-path=./migrations
-
 import (
 	"errors"
 	"flag"
 	"fmt"
+
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -28,7 +27,7 @@ func main() {
 
 	m, err := migrate.New(
 		"file://"+migrationsPath,
-		/* fmt.Sprintf("postgres://%s?x-migrations-table=%s",*/ storagePath)
+		storagePath)
 	if err != nil {
 		panic(err)
 	}

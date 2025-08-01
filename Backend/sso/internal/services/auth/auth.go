@@ -8,9 +8,10 @@ import (
 	_ "database/sql"
 	"errors"
 	"fmt"
-	"golang.org/x/crypto/bcrypt"
 	"log/slog"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 
 	_ "github.com/lib/pq"
 )
@@ -72,7 +73,6 @@ func (a *Auth) Login(
 
 	user, err := a.userProvider.User(ctx, email)
 	if err != nil {
-		fmt.Println(err)
 		if errors.Is(err, storage.ErrUserNotFound) {
 			a.log.Warn("user not found")
 			return "", fmt.Errorf("%s: %w", op, ErrInvalidCredentials)

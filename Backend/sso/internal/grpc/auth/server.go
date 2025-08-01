@@ -5,11 +5,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
 	ssov1 "github.com/Ethic1903/todo-protos/gen/go/sso"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
-import "google.golang.org/grpc"
 
 const (
 	emptyValue = 0
@@ -89,23 +90,6 @@ func (s *serverAPI) IsAdmin(
 	}
 	return &ssov1.IsAdminResponse{IsAdmin: isAdmin}, nil
 }
-
-//func (s *serverAPI) ValidateToken(ctx context.Context, req *ssov1.ValidateTokenRequest) (*ssov1.ValidateTokenResponse, error){
-//	if req.GetToken() == "" {
-//		return nil, status.Error(codes.InvalidArgument, "token is required")
-//	}
-//
-//	token, err := jwt.Parse(req.GetToken(), func(token *jwt.Token) (interface{}, error) {
-//		claims := token.Claims.(jwt.MapClaims)
-//		appID := int(claims["app_id"].(float64))
-//
-//		app, err := s.auth.App(ctx, appID)
-//		if err != nil {
-//			return nil, err
-//		}
-//		return []byte(app.Secret), nil
-//	})
-//}
 
 func validateLogin(req *ssov1.LoginRequest) error {
 	if req.GetEmail() == "" {

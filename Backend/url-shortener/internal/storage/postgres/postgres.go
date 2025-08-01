@@ -22,7 +22,9 @@ func New(storagePath string) (*Storage, error) {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 	err = db.Ping()
-	fmt.Println(err)
+	if err != nil {
+		return nil, fmt.Errorf("%s: %w", op, err)
+	}
 	return &Storage{db: db}, nil
 }
 
@@ -52,7 +54,7 @@ func (s *Storage) GetURL(ctx context.Context, alias string) (string, error) {
 
 	stmt, err := s.db.Prepare(`select url from url where alias=$1`)
 	if err != nil {
-		return "", fmt.Errorf("%s: %w", op, storage.ErrURLNotFound)
+		return "", fmt.Errorf("%s: %w", op, err)
 	}
 	defer stmt.Close()
 

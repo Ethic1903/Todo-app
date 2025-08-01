@@ -9,8 +9,6 @@ import (
 	"syscall"
 )
 
-//команда для запуска сервиса sso: go run cmd/sso/main.go --config=./config/local.yaml
-
 const (
 	envLocal = "local"
 	envDev   = "dev"

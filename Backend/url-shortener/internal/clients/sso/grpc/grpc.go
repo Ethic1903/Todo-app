@@ -3,13 +3,13 @@ package grpc
 import (
 	"context"
 	"fmt"
+	"time"
+
 	ssov1 "github.com/Ethic1903/todo-protos/gen/go/sso"
-	//grpclog "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	grpcretry "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/retry"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
-	"time"
 )
 
 type Client struct {
@@ -41,16 +41,6 @@ func New(ctx context.Context,
 		api: ssov1.NewAuthClient(cc),
 	}, nil
 }
-
-//func (c *Client) ValidateToken(ctx context.Context, token string) (int64, error) {
-//	const op = "sso.grpc.ValidateToken"
-//
-//	resp, err := c.api.ValidateToken(ctx, &ssov1.ValidateTokenRequest{Token: token})
-//	if err != nil {
-//		return 0, fmt.Errorf("%s: %w", op, err)
-//	}
-//	return resp.GetUserId(), nil
-//}
 
 func (c *Client) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 	const op = "sso.grpc.IsAdmin"

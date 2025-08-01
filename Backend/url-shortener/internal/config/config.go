@@ -12,6 +12,7 @@ type Config struct {
 	Env            string `yaml:"env" env-default:"local"`
 	StoragePath    string `yaml:"storage_path" env-required:"true"`
 	MigrationsPath string `yaml:"migrations_path" env-required:"true"`
+	AliasLength    int    `yaml:"alias_length" env-default:"6"`
 	HTTPServer     `yaml:"http_server"`
 	Clients        ClientsConfig `yaml:"clients"`
 	AppSecret      string        `yaml:"app_secret" env-required:"true" env:"APP_SECRET"`
